@@ -1,0 +1,35 @@
+body{
+	background:white;
+}
+
+.title-container{
+	text-align:center;
+	width: 100%;
+	height:auto;
+}
+
+.form-control:focus {
+	border-color:gray;
+	box-shadow: 0 0px 1px gray inset, 0 0 8px gray;
+	outline: 0 none;
+}
+
+.form-inline{
+	display:flex;
+	justify-content:center;
+}
+
+.dropdown, .submit-button{
+	margin-left:10px;
+}
+
+.table-container{
+	margin-top:10px;
+	display:flex;
+	justify-content:center;
+	width:auto;
+	height:auto;
+	margin-top:50px;
+	padding-right:200px;
+	padding-left:200px;
+}
