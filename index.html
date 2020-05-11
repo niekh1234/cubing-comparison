@@ -37,33 +37,35 @@
 		</form>
 
 		<div ref="vueTable" class="table-container">
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th scope="col">#</th>	
-						<th scope="col" v-for="(value, name) in wrTimes">
-							{{ name }}
-						</th>
-					</tr>
-				</thead>
+			<div class="table-responsive-sm">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th scope="col">#</th>	
+							<th scope="col" v-for="(value, name) in wrTimes">
+								{{ name }}
+							</th>
+						</tr>
+					</thead>
 
-				<tbody>
-					<tr>
-						<td scope="row">World records ao5's (to get ratios)</td>
-						<td v-for="(value, name) in wrTimes">
-							{{ value }}
-						</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr>
-						<th scope="row">Your ideal times</th>
-						<th v-for="(value, name) in userPrediction" v-bind:style= "[name == selection ? {'background': '#adffc3'} : {'background': 'white'}]">
-							{{ value }}
-						</th>
-					</tr>
-				</tbody>
-			</table>
+					<tbody>
+						<tr>
+							<td class="td-title" scope="row">World records ao5's (to get ratios)</td>
+							<td v-for="(value, name) in wrTimes">
+								{{ value }}
+							</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<th scope="row">Your ideal times</th>
+							<th v-for="(value, name) in userPrediction" v-bind:style= "[name == selection ? {'background': '#adffc3'} : {'background': 'white'}]">
+								{{ value }}
+							</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </body>
