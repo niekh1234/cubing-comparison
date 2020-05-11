@@ -23,6 +23,10 @@ const form = new Vue({
 
 	mounted: function(){
 		console.log("nosy aren't you")
+
+		if(window.localStorage.getItem('savedTimes') != null){
+			this.userPrediction = JSON.parse(window.localStorage.getItem('savedTimes'));
+		}
 	},
 
 	methods: {
@@ -36,6 +40,7 @@ const form = new Vue({
 
 			if(isNaN(this.convertToSeconds(this.message)) || this.message == ""){
 				target.style.border = "2px solid #fa6670";
+
 				return;
 			}
 			target.style.border = "";
@@ -54,6 +59,7 @@ const form = new Vue({
 			} else {
 				sum += parseFloat(num[0]);
 			}
+
 			return sum;
 		},
 
@@ -76,8 +82,9 @@ const form = new Vue({
 
 				try{
 					this.userPrediction[eventList[i]] = this.userPrediction[eventList[i-1]] * (this.convertToSeconds(this.wrTimes[eventList[i]]) / this.convertToSeconds(this.wrTimes[eventList[i-1]]));
+				
 				} catch(TypeError){
-					null
+					null;
 				}
 			}
 
@@ -89,14 +96,32 @@ const form = new Vue({
 
 				try{
 					this.userPrediction[eventList[i]] = this.userPrediction[eventList[i+1]] * (this.convertToSeconds(this.wrTimes[eventList[i]]) / this.convertToSeconds(this.wrTimes[eventList[i+1]]));
+				
 				} catch(TypeError){
-					null
+					null;
 				}
 			}
 			//hey let's throw in another for loop ;(
 			for(let time in this.userPrediction){
 				this.userPrediction[time] = this.convertToMinutes(this.userPrediction[time]);
 			}
+
+			window.localStorage.setItem('savedTimes', JSON.stringify(this.userPrediction))
+		},
+		clearLS: function(){
+			window.localStorage.clear();
+
+			this.$refs.vueForm.value = "";
+
+			this.userPrediction = {
+				"2x2": "0",
+				"3x3": "0",
+				"4x4": "0",
+				"5x5": "0",
+				"6x6": "0",
+				"7x7": "0"
+			}
+
 		}
 	}
 })

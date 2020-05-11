@@ -19,8 +19,8 @@ body{
 	justify-content:center;
 }
 
-.dropdown{
-	margin-left:10px;
+.btn{
+	margin-left:15px;
 }
 
 .table-container{
@@ -36,8 +36,8 @@ body{
 
 @media screen and (min-width: 800px){
 	.table-container{
-		padding-right:200px;
-		padding-left:200px;	
+		padding-right:100px;
+		padding-left:100px;	
 	}
 }
 
