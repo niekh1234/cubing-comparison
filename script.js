@@ -36,7 +36,6 @@ const form = new Vue({
 
 			if(isNaN(this.convertToSeconds(this.message)) || this.message == ""){
 				target.style.border = "2px solid #fa6670";
-				target.value = "";
 				return;
 			}
 			target.style.border = "";
