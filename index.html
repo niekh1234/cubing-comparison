@@ -26,16 +26,15 @@
 				{{ selection }}
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a v-on:click="nxn" class="dropdown-item" href="#">2x2</a>
-					<a v-on:click="nxn" class="dropdown-item" href="#">3x3</a>
-					<a v-on:click="nxn" class="dropdown-item" href="#">4x4</a>
-					<a v-on:click="nxn" class="dropdown-item" href="#">5x5</a>
-					<a v-on:click="nxn" class="dropdown-item" href="#">6x6</a>
-					<a v-on:click="nxn" class="dropdown-item" href="#">7x7</a>
+					<a class="dropdown-item" v-for="(value, name) in wrTimes" v-on:click="nxn" href="#">
+						{{name}}
+					</a>
 				</div>
 			</div>
 
 			<button v-on:click="clearLS" type="button" class="btn btn-danger">Clear cache</button>
+
+			<button v-on:click="enableExperimental" type="button" class="btn btn-warning">Enable side events (experimental)</button>
 		</form>
 
 		<div ref="vueTable" class="table-container">
