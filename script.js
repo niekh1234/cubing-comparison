@@ -123,7 +123,7 @@ const form = new Vue({
 			window.localStorage.setItem('enableSideEvents', JSON.stringify(this.toggled));
 		},
 		clearLS: function () {
-			window.localStorage.clear();
+			window.localStorage.clear;
 
 			this.$refs.vueForm.value = "";
 
@@ -139,6 +139,12 @@ const form = new Vue({
 
 				for (let time in this.wrTimesSideEvents) {
 					this.$set(this.wrTimes, time, this.wrTimesSideEvents[time]);
+				}
+
+				if(this.message == ""){
+					if(this.userPrediction[this.selection] != null){
+						this.message = this.userPrediction[this.selection];
+					}
 				}
 
 				this.submit();
