@@ -11,29 +11,40 @@ const form = new Vue({
 			"6x6": "01:15.90",
 			"7x7": "02:00.65"
 		},
-		userPrediction: {
-			"2x2": "0",
-			"3x3": "0",
-			"4x4": "0",
-			"5x5": "0",
-			"6x6": "0",
-			"7x7": "0"
+		wrTimesSideEvents: {
+			"Clock": "00:04.38",
+			"Megaminx": "00:30.39",
+			"Pyraminx": "00:01.86",
+			"Skewb": "00:02.03",
+			"Square-1": "00:06.54",
+		},
+		userPrediction: {},
+		toggled: false
+	},
+
+	beforeMount: function () {
+		for(let time in this.wrTimes){
+			this.userPrediction[time] = "0";
 		}
 	},
 
 	mounted: function () {
 		console.log("nosy aren't you")
 
-		document.querySelector(".dropdown-menu").children.append;
+		if(window.localStorage.getItem('enableSideEvents') != null){
+			this.toggled = !JSON.parse(window.localStorage.getItem('enableSideEvents'));
+			
+			this.toggleExperimental();
+		}
 
-		if (window.localStorage.getItem('savedTimes') != null) {
+		if(window.localStorage.getItem('savedTimes') != null) {
 			this.userPrediction = JSON.parse(window.localStorage.getItem('savedTimes'));
 		}
 	},
 
 	methods: {
 		nxn: function (e) {
-			this.selection = e.target.innerHTML;
+			this.selection = e.target.innerHTML.replace(/\s+/g, '');
 			this.submit();
 		},
 
@@ -108,25 +119,40 @@ const form = new Vue({
 				this.userPrediction[time] = this.convertToMinutes(this.userPrediction[time]);
 			}
 
-			window.localStorage.setItem('savedTimes', JSON.stringify(this.userPrediction))
+			window.localStorage.setItem('savedTimes', JSON.stringify(this.userPrediction));
+			window.localStorage.setItem('enableSideEvents', JSON.stringify(this.toggled));
 		},
 		clearLS: function () {
 			window.localStorage.clear();
 
 			this.$refs.vueForm.value = "";
 
-			this.userPrediction = {
-				"2x2": "0",
-				"3x3": "0",
-				"4x4": "0",
-				"5x5": "0",
-				"6x6": "0",
-				"7x7": "0"
+			for(let time in this.userPrediction){
+				this.userPrediction[time] = "0";
 			}
-
 		},
-		enableExperimental: function () {
+		toggleExperimental: function () {
+			this.toggled = !this.toggled;
 
+			if (this.toggled) {
+				this.$refs.toggleButton.innerHTML = "Disable side events";
+
+				for (let time in this.wrTimesSideEvents) {
+					this.$set(this.wrTimes, time, this.wrTimesSideEvents[time]);
+				}
+
+				this.submit();
+			} else {
+				this.$refs.toggleButton.innerHTML = "Enable side events (experimental)";
+
+				for (let time in this.wrTimesSideEvents){
+					this.$delete(this.wrTimes, time)
+					this.$delete(this.userPrediction, time)
+				}
+
+				this.selection = "3x3";
+				this.submit();
+			}
 		}
 	}
 })
