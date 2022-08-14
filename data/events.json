@@ -1,0 +1,76 @@
+{
+  "events": [
+    {
+      "key": "2x2",
+      "title": "2x2",
+      "type": "nxn",
+      "average": "2.26"
+    },
+    {
+      "key": "3x3",
+      "title": "3x3",
+      "type": "nxn",
+      "average": "7.92"
+    },
+    {
+      "key": "4x4",
+      "title": "4x4",
+      "type": "nxn",
+      "average": "32.58"
+    },
+    {
+      "key": "5x5",
+      "title": "5x5",
+      "type": "nxn",
+      "average": "63.25"
+    },
+    {
+      "key": "6x6",
+      "title": "6x6",
+      "type": "nxn",
+      "average": "125.38"
+    },
+    {
+      "key": "7x7",
+      "title": "7x7",
+      "type": "nxn",
+      "average": "189.59"
+    },
+    {
+      "key": "oh",
+      "title": "3x3 OH",
+      "type": "nxn",
+      "average": "13.96"
+    },
+    {
+      "key": "pyraminx",
+      "title": "Pyraminx",
+      "type": "side",
+      "average": "3.40"
+    },
+    {
+      "key": "megaminx",
+      "title": "Megaminx",
+      "type": "side",
+      "average": "43.81"
+    },
+    {
+      "key": "skewb",
+      "title": "Skewb",
+      "type": "side",
+      "average": "3.95"
+    },
+    {
+      "key": "squan",
+      "title": "Square-1",
+      "type": "side",
+      "average": "12.75"
+    },
+    {
+      "key": "clock",
+      "title": "Clock",
+      "type": "side",
+      "average": "8.23"
+    }
+  ]
+}
