@@ -4,7 +4,7 @@ import TimeInput from './Time';
 
 const Input = () => {
   return (
-    <div className='flex flex-wrap md:justify-center'>
+    <div className="flex flex-wrap md:justify-center">
       <TimeInput></TimeInput>
       <EventInput></EventInput>
       <Settings></Settings>

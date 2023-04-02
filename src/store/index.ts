@@ -1,7 +1,7 @@
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Table } from '../types';
-import { createTableSeed, updateTable } from '../utils/table';
+import { createTableSeed, getRecordAverages, updateTable } from '../utils/table';
 
 interface State {
   time: string;
@@ -9,11 +9,12 @@ interface State {
   event: string;
   setEvent: (event: string) => void;
   table: Table;
-  showSideEvents: Boolean;
-  setShowSideEvents: (showSideEvents: Boolean) => void;
   setTable: (table: Table) => void;
   updateRow: (targetTime: string, eventKey: string) => void;
   reset: () => void;
+  updateRecords: () => void;
+  loaded: boolean;
+  setLoaded: (loaded: boolean) => void;
 }
 
 const useStore = create(
@@ -21,6 +22,8 @@ const useStore = create(
     time: '',
     setTime: (time) => {
       set({ time });
+      console.log(get());
+
       if (get().event) {
         set({
           table: updateTable(time, get().event, get().table),
@@ -36,11 +39,7 @@ const useStore = create(
         });
       }
     },
-    table: createTableSeed(),
-    showSideEvents: false,
-    setShowSideEvents: (showSideEvents) => {
-      set({ showSideEvents });
-    },
+    table: [] as any as Table,
     setTable: (table: Table) => set({ table }),
     updateRow(time: string, eventKey: string) {
       set({
@@ -48,9 +47,25 @@ const useStore = create(
       });
     },
     reset() {
-      set({ table: createTableSeed() });
+      createTableSeed().then((table) => set({ table }));
     },
-  })),
+    updateRecords() {
+      const { table } = get();
+
+      getRecordAverages().then((records) => {
+        set({
+          table: {
+            rows: records.map((record: any) => ({
+              ...record,
+              target: table.rows.find((row) => row.key === record.key)?.target || 0,
+            })),
+          },
+        });
+      });
+    },
+    loaded: false,
+    setLoaded: (loaded) => set({ loaded }),
+  }))
 );
 
 export default useStore;

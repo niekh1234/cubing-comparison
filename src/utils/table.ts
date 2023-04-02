@@ -1,17 +1,31 @@
 import { getTimeInSeconds, getTimeString } from './parse-time';
-import { events } from '../../data/events.json';
 import { Table, TableRow } from '../types';
 
-export const createTableSeed = () => {
-  const rows = events.map((event) => ({
-    key: event.key,
-    event: event.title,
-    type: event.type,
-    average: getTimeInSeconds(event.average),
-    target: '',
-  }));
+export const getRecordAverages = async () => {
+  try {
+    const response = await fetch('https://wca-proxy.niekh.com/api/v1/records');
+    const { records } = await response.json();
 
-  return { rows };
+    return records.map((record: any) => ({
+      key: record.slug,
+      event: record.event,
+      average: getTimeInSeconds(record?.records?.average?.n || record?.records?.single?.n || 0),
+    }));
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export const createTableSeed = async () => {
+  const records = await getRecordAverages();
+
+  return {
+    rows: records.map((record: any) => ({
+      ...record,
+      target: 0,
+    })),
+  };
 };
 
 export const updateTable = (time: string, eventKey: string, currentTable: Table): Table => {
@@ -47,18 +61,4 @@ export const updateTable = (time: string, eventKey: string, currentTable: Table)
   return {
     rows: updatedRows,
   };
-};
-
-export const divideTableByRowType = (table: Table, showSideEvents: Boolean): TableRow[][] => {
-  return table.rows.reduce(
-    (acc: TableRow[][], row) => {
-      if (row.type === 'side' && !showSideEvents) {
-        return acc;
-      }
-
-      row.type === 'nxn' ? acc[0].push(row) : acc[1].push(row);
-      return acc;
-    },
-    [[], []],
-  );
 };

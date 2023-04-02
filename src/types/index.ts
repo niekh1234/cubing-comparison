@@ -7,5 +7,4 @@ export type TableRow = {
   average: number;
   target: string;
   key: string;
-  type: string;
 };
