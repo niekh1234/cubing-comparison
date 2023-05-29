@@ -55,10 +55,12 @@ const useStore = create(
       getRecordAverages().then((records) => {
         set({
           table: {
-            rows: records.map((record: any) => ({
-              ...record,
-              target: table.rows.find((row) => row.key === record.key)?.target || 0,
-            })),
+            rows: records
+              .filter((record: any) => record.key !== '3x3x3-multiblind')
+              .map((record: any) => ({
+                ...record,
+                target: table.rows.find((row) => row.key === record.key)?.target || 0,
+              })),
           },
         });
       });
